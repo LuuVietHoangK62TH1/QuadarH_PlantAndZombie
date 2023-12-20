@@ -457,7 +457,7 @@ Transform:
   m_GameObject: {fileID: 3987133898451156565}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
+  m_LocalScale: {x: 0.55, y: 0.55, z: 1}
   m_Children:
   - {fileID: 3144963948467717886}
   - {fileID: 9084155438599274761}
@@ -593,6 +593,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c9086668da271ca41b137496f4e00b8a, type: 3}
   - {fileID: 8300000, guid: f74c798617da77b45ae3d924617c6f02, type: 3}
   damageDelay: 2
+  isWalking: 0
 --- !u!61 &8106344079617406376
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -846,10 +847,10 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4225900456744540549}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.33000004, y: 0.85425735}

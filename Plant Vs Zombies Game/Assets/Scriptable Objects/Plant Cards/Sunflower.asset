@@ -34,3 +34,5 @@ MonoBehaviour:
   blinkingRate: 0
   mineStates: []
   size: {x: 0.19, y: 0.19}
+  colliderSize: {x: 4.3445044, y: 4.3152895}
+  radius: 2.14699

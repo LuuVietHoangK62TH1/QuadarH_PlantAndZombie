@@ -108,8 +108,13 @@ public class CardManager : MonoBehaviour, IDragHandler, IPointerUpHandler, IPoin
                 plant.transform.SetParent(colliderName.transform);
                 plant.transform.position = new Vector3(0, 0, -1);
                 plant.transform.localPosition = new Vector3(0, 0, -1);
-                plant.AddComponent<BoxCollider2D>();
-                plant.AddComponent<CircleCollider2D>();
+
+                BoxCollider2D boxColl = plant.AddComponent<BoxCollider2D>();
+                boxColl.size = plantCardScriptableObject.colliderSize;
+                
+                CircleCollider2D circleColl = plant.AddComponent<CircleCollider2D>();
+                circleColl.radius = plantCardScriptableObject.radius;
+
                 plant.GetComponent<CircleCollider2D>().isTrigger = true;
                 plant.transform.localScale = plantCardScriptableObject.size;
 
@@ -146,5 +151,10 @@ public class CardManager : MonoBehaviour, IDragHandler, IPointerUpHandler, IPoin
         }
 
         isCoolingDown = false;
+    }
+
+    public void StartRefresh()
+    {
+        StartCoroutine(cardCooldown(plantCardScriptableObject.cooldown));
     }
 }

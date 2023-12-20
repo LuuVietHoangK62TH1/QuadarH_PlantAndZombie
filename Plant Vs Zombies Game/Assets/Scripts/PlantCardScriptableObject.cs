@@ -26,4 +26,7 @@ public class PlantCardScriptableObject : ScriptableObject
     public Sprite[] mineStates;
 
     public Vector2 size;
+
+    public Vector2 colliderSize;
+    public float radius;
 }
