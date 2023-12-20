@@ -9,24 +9,27 @@ public class GameManager : MonoBehaviour
     public int startingSunAmnt;
     public int SunAmount = 0;
 
+    public GameObject decorativeZombies;
+
     public Transform cardSlotsHolder;
+
+    public ZombieManager zombieManager;
+
+    public Animator cameraPan;
 
     private void Start()
     {
+        CardManager.isGameStart = false;
         AddSun(startingSunAmnt);
-
-        foreach (Transform card in cardSlotsHolder)
-        {
-            try
-            {
-                card.GetComponent<CardManager>().StartRefresh();
-            }
-            catch (System.Exception)
-            {
-                Debug.LogError("Card does not contain CardManager script!");
-            }
-        }
     }
+
+    public void StartMatch()
+	{
+        cameraPan.SetTrigger("PanToPlants");
+        CardManager.isGameStart = true;
+        RefreshAllPlantCards();
+        zombieManager.SpawnZombies();
+	}
 
     public void AddSun(int amnt)
     {
@@ -38,5 +41,20 @@ public class GameManager : MonoBehaviour
     {
         SunAmount -= amnt;
         sunDisp.text = "" + SunAmount;
+    }
+
+    public void RefreshAllPlantCards()
+	{
+        foreach (Transform card in cardSlotsHolder)
+        {
+            try
+            {
+                card.GetComponent<CardManager>().StartRefresh();
+            }
+            catch (System.Exception)
+            {
+                Debug.LogError("Card does not contain CardManager script!");
+            }
+        }
     }
 }

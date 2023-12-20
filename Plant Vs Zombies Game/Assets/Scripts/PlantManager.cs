@@ -67,6 +67,7 @@ public class PlantManager : MonoBehaviour
 
     public IEnumerator Attack()
     {
+        Debug.Log("Attacking... Plants " + this.gameObject.name);
         yield return new WaitUntil(() => !isDragging);
 
         if (!isMine)
@@ -75,9 +76,13 @@ public class PlantManager : MonoBehaviour
             if (speed > 0)
             {
                 RaycastHit2D hit = Physics2D.Raycast(shootPoint.position, shootPoint.right, range, zombieLayer);
+
                 Debug.DrawRay(shootPoint.position, shootPoint.right, Color.red);
+
                 if (hit)
                 {
+                    Debug.Log("Attacking Info plant name : " + this.gameObject.name + ", gameObject name : " + hit.collider.name + ", tag : " + hit.collider.tag);
+
                     if (hit.transform.tag == "Zombie")
                     {
                         Debug.Log("Hit zombie");

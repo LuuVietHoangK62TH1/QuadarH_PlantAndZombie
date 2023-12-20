@@ -13,7 +13,7 @@ public class ZombieManager : MonoBehaviour
     public Transform[] columns;
     public int selectedColumns;
 
-    private void Start()
+    public void SpawnZombies ()
     {
         StartCoroutine(ZombieSpawn());
     }

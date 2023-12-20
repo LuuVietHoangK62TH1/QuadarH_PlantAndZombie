@@ -23,8 +23,23 @@ public class CardManager : MonoBehaviour, IDragHandler, IPointerUpHandler, IPoin
 
     public bool isCoolingDown;
 
+    public bool isSelection;
+
+    public bool isSelected;
+
+    public static bool isGameStart = false;
+
+    public PlantCardManager plantCardManager;
+
+    public CardManager parentCard;
+
     public void OnDrag(PointerEventData eventData)
     {
+		if (isSelection)
+		{
+            return;
+		}
+
         if (isCoolingDown)
         {
             return;
@@ -67,31 +82,54 @@ public class CardManager : MonoBehaviour, IDragHandler, IPointerUpHandler, IPoin
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (isCoolingDown)
-        {
-            return;
-        }
-
-        if (GameObject.FindObjectOfType<GameManager>().SunAmount >= plantCardScriptableObject.cost)
-        {
-            isHoldingPlant = true;
-            Vector3 pos = new Vector3(0, 0, -1);
-            plant = Instantiate(plantPrefab, pos, Quaternion.identity);
-            plant.GetComponent<PlantManager>().thisSO = plantCardScriptableObject;
-            plant.GetComponent<PlantManager>().isDragging = true;
-            plant.transform.localScale = plantCardScriptableObject.size;
-            plant.GetComponent<SpriteRenderer>().sprite = plantSprite;
-
-            plant.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		if (isSelection)
+		{
+			//Click on this, add reference to bar
+            isSelected = true;
+            plantCardManager.AddPlantReference(plantCardScriptableObject, this.gameObject.GetComponent<CardManager>());
         }
         else
-        {
-            Debug.Log("Not enough sun!");
+		{
+			if (!isGameStart)
+			{
+                //Deselect card
+                parentCard.isSelected = isSelected = false;
+                plantCardManager.AddPlantReference(plantCardScriptableObject);
+            }
+			else
+			{
+                if (isCoolingDown)
+                {
+                    return;
+                }
+
+                if (GameObject.FindObjectOfType<GameManager>().SunAmount >= plantCardScriptableObject.cost)
+                {
+                    isHoldingPlant = true;
+                    Vector3 pos = new Vector3(0, 0, -1);
+                    plant = Instantiate(plantPrefab, pos, Quaternion.identity);
+                    plant.GetComponent<PlantManager>().thisSO = plantCardScriptableObject;
+                    plant.GetComponent<PlantManager>().isDragging = true;
+                    plant.transform.localScale = plantCardScriptableObject.size;
+                    plant.GetComponent<SpriteRenderer>().sprite = plantSprite;
+
+                    plant.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                }
+                else
+                {
+                    Debug.Log("Not enough sun!");
+                }
+            }
         }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
+		if (isSelection)
+		{
+            return;
+		}
+
         if (isCoolingDown)
         {
             return;
@@ -108,6 +146,7 @@ public class CardManager : MonoBehaviour, IDragHandler, IPointerUpHandler, IPoin
                 plant.transform.SetParent(colliderName.transform);
                 plant.transform.position = new Vector3(0, 0, -1);
                 plant.transform.localPosition = new Vector3(0, 0, -1);
+                plant.name = plantCardScriptableObject.name;
 
                 BoxCollider2D boxColl = plant.AddComponent<BoxCollider2D>();
                 boxColl.size = plantCardScriptableObject.colliderSize;

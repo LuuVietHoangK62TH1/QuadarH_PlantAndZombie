@@ -374,7 +374,7 @@ GameObject:
   - component: {fileID: 9084155438599274761}
   m_Layer: 0
   m_Name: Hand Pivot
-  m_TagString: Untagged
+  m_TagString: ZombieHand
   m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -405,7 +405,7 @@ GameObject:
   - component: {fileID: 1461917572109635661}
   m_Layer: 0
   m_Name: Foot Pivot
-  m_TagString: Untagged
+  m_TagString: ZombieHand
   m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -607,7 +607,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.5228337, y: -0.29314256}
+  m_Offset: {x: -0.5228337, y: 0.20872563}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -618,7 +618,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.08017087, y: 0.8848727}
+  m_Size: {x: 0.08017087, y: 1.8460382}
   m_EdgeRadius: 0
 --- !u!82 &2116336126845011267
 AudioSource:
@@ -867,7 +867,7 @@ GameObject:
   - component: {fileID: 8323159551119140403}
   m_Layer: 0
   m_Name: Other Hand Pivot
-  m_TagString: Untagged
+  m_TagString: ZombieHand
   m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -898,7 +898,7 @@ GameObject:
   - component: {fileID: 478085384156153342}
   m_Layer: 0
   m_Name: Other Foot Pivot
-  m_TagString: Untagged
+  m_TagString: ZombieHand
   m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

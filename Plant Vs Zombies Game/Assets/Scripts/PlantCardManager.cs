@@ -13,37 +13,112 @@ public class PlantCardManager : MonoBehaviour
     public Transform cardHolderTransform;
 
     [Header("Plant Parameters")]
-    public GameObject[] plantCards;
+    public List<GameObject> plantCards;
     public float cooldown;
     public int cost;
     public Texture plantIcon;
 
-    private void Start()
-    {
+    public Transform selectionTransform;
+    public GameObject selectionCardPrefab;
+
+    public List<int> selectedIndexes;
+    public List<GameObject> selectionCards;
+
+    public int minCardAllowed;
+    public Button letsRockButton;
+
+	private void Start()
+	{
         amtOfCards = plantCardSO.Length;
-        plantCards = new GameObject[amtOfCards];
+        plantCards = new List<GameObject>();
+
+        selectionCards = new List<GameObject>();
 
         for (int i = 0; i < amtOfCards; i++)
         {
-            AddPlantCard(i);
+            AddPlantCardSelection(i);
         }
     }
 
-    public void AddPlantCard(int index)
+	public void Update()
+	{
+        letsRockButton.interactable = plantCards.Count >= minCardAllowed;
+	}
+
+	private void Start_Old()
     {
-        GameObject card = Instantiate(cardPrefab, cardHolderTransform);
+        for (int i = 0; i < amtOfCards; i++)
+        {
+            //AddPlantCard(i);
+        }
+    }
+
+    public void AddPlantReference(PlantCardScriptableObject plantSO, CardManager parentCard = default)
+	{
+        AddPlantCard(new List<PlantCardScriptableObject>(plantCardSO).IndexOf(plantSO), parentCard);
+	}
+
+    public void AddPlantCard(int index, CardManager parentCard = default)
+    {
+        if (selectedIndexes.Contains(index))
+		{
+            //Remove card
+            int indexPos = selectedIndexes.IndexOf(index);
+
+            GameObject tempRef = plantCards[indexPos];
+
+            plantCards.Remove(tempRef);
+
+            Destroy(tempRef);
+
+            selectedIndexes.Remove(index);
+        }
+		else
+		{
+            selectedIndexes.Add(index);
+
+            GameObject card = Instantiate(cardPrefab, cardHolderTransform);
+            CardManager cardManager = card.GetComponent<CardManager>();
+
+            cardManager.plantCardScriptableObject = plantCardSO[index];
+            cardManager.plantSprite = plantCardSO[index].plantSprite;
+            cardManager.UI = GameObject.FindGameObjectWithTag("Canvas");
+
+            plantCards.Add(card);
+
+            //Getting Variables
+            plantIcon = plantCardSO[index].plantIcon;
+            cost = plantCardSO[index].cost;
+            cooldown = plantCardSO[index].cooldown;
+
+            cardManager.parentCard = parentCard;
+            cardManager.plantCardManager = this;
+
+            Debug.Log("Name : " + parentCard.gameObject.name);
+
+            //Updating UI
+            card.GetComponentInChildren<RawImage>().texture = plantIcon;
+            card.GetComponentInChildren<TMP_Text>().text = "" + cost;
+        }
+    }
+
+    public void AddPlantCardSelection(int index)
+    {
+        GameObject card = Instantiate(selectionCardPrefab, selectionTransform);
         CardManager cardManager = card.GetComponent<CardManager>();
 
         cardManager.plantCardScriptableObject = plantCardSO[index];
         cardManager.plantSprite = plantCardSO[index].plantSprite;
         cardManager.UI = GameObject.FindGameObjectWithTag("Canvas");
 
-        plantCards[index] = card;
+        selectionCards.Add(card);
 
         //Getting Variables
         plantIcon = plantCardSO[index].plantIcon;
         cost = plantCardSO[index].cost;
         cooldown = plantCardSO[index].cooldown;
+
+        cardManager.plantCardManager = this;
 
         //Updating UI
         card.GetComponentInChildren<RawImage>().texture = plantIcon;
