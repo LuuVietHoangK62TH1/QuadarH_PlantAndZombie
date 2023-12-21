@@ -25,6 +25,7 @@ public class ZombieController : MonoBehaviour
     public float damageDelay = 2f;
 
     bool isDying;
+    bool incremented = false;
 
     [Header("Animator Parameters")]
     public bool isWalking;
@@ -75,8 +76,15 @@ public class ZombieController : MonoBehaviour
         if (currentHealth <= 0 && this.transform.childCount > 0)
         {
             isDying = true;
-            //Dead
-            //Add rigidbody 2d to head
+			//Dead
+			//Add rigidbody 2d to head
+
+			if (!incremented)
+			{
+                incremented = true; 
+                WaveManger.currentZombieKilled++;
+            }
+
             Transform head = this.transform.GetChild(0);
 
             head.gameObject.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
