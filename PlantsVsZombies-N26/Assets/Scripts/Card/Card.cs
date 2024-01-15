@@ -10,7 +10,6 @@ public class Card : MonoBehaviour
         NoSun,
         CD
     }
-
     private HandlerForPlants plantHandler;
     public Sprite enableSprite;
     public Sprite disableSprite;
